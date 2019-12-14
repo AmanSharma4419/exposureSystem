@@ -7,7 +7,7 @@ const bcrypt = require("bcrypt");
 
 //Extracting Schema
 const Schema = mongoose.Schema;
-
+const findOrCreate = require("mongoose-findorcreate");
 //Creating user schema
 const userSchema = new Schema(
   {
@@ -29,7 +29,7 @@ const userSchema = new Schema(
     isActive: Boolean,
     isAdmin: false,
     isApproved: { type: Boolean, default: false },
-    sentContent: [{ type: Schema.Types.ObjectId, ref: "contentSchema" }]
+    sentContent: [{ type: Schema.Types.ObjectId, ref: "Content" }]
   },
   {
     timestamps: true
@@ -47,7 +47,7 @@ userSchema.pre("save", function(next) {
 userSchema.methods.confirmPassword = function(password) {
   return bcrypt.compareSync(password, this.password);
 };
-
+userSchema.plugin(findOrCreate);
 const User = mongoose.model("User", userSchema);
 
 //Exporting User Model
