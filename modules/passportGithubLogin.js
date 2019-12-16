@@ -9,10 +9,16 @@ passport.use(
       clientSecret: process.env.Client_Secret,
       callbackURL: "http://localhost:3000/auth/github/callback"
     },
-    function(accessToken, refreshToken, profile, cb) {
-      const username = profile.username;
-      const useremail = profile.emails[0].value;
-      User.find({ email: useremail }, (err, user) => {
+    function(accessToken, refreshToken, profile, cb, res) {
+      const userName = profile.username;
+      const userEmail = profile.emails[0].value;
+      User.findOne({ email: userEmail }, (err, user) => {
+        if (err) console.log(err);
+        if (!user) {
+          User.create({ userName: userName, email: userEmail }, (err, user) => {
+            console.log(user, "user created by github!");
+          });
+        }
       });
     }
   )
