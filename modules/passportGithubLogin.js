@@ -10,9 +10,9 @@ passport.use(
       callbackURL: "http://localhost:3000/auth/github/callback"
     },
     function(accessToken, refreshToken, profile, cb) {
-      console.log("profile", profile);
-      User.findorCreate({ githubId: profile.id }, function(err, user) {
-        return cb(err, user);
+      const username = profile.username;
+      const useremail = profile.emails[0].value;
+      User.find({ email: useremail }, (err, user) => {
       });
     }
   )
