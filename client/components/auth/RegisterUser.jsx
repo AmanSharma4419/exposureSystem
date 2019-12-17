@@ -1,28 +1,28 @@
 /* eslint-disable no-alert */
-import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
-import validator from 'validator';
-import Header from '../header/Header';
+import React, { Component } from "react";
+import { NavLink } from "react-router-dom";
+import { connect } from "react-redux";
+import validator from "validator";
+import Header from "../header/Header";
 
 class RegisterUser extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
-      email: '',
-      password: '',
+      username: "",
+      email: "",
+      password: ""
     };
   }
 
   handleChange = e => {
     this.setState({
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   };
 
   cb = () => {
-    this.props.history.push('/register/onboarding');
+    this.props.history.push("/register/onboarding");
   };
 
   handleSubmit = (event, cb) => {
@@ -34,25 +34,26 @@ class RegisterUser extends Component {
     // const { username, email, password } = this.state;
     const { dispatch } = this.props;
     if (!username || !email || !password) {
-      return alert('Email , password and username are must.');
+      return alert("Email , password and username are must.");
     }
     if (!validator.isEmail(email)) {
-      return alert('Invalid Email.');
+      return alert("Invalid Email.");
     }
     if (password.length < 6) {
-      return alert('Password should be atleast 6 character.');
+      return alert("Password should be atleast 6 character.");
     }
     // console.log('inside handleSubmit RegisterUser');
     return dispatch(
       {
-        type: 'REGISTER_PAGE_DATA',
-        data: this.state,
+        type: "REGISTER_PAGE_DATA",
+        data: this.state
       },
-      this.cb(),
+      this.cb()
     );
   };
 
   render() {
+    console.log(this.props, "in the user registration!");
     const { username, email, password } = this.state;
     // console.log(this.state);
     return (

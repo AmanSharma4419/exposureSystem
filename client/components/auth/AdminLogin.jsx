@@ -1,55 +1,53 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import store from '../../redux/store/store';
-import { adminLogin } from '../../redux/actions/adminAction';
-import validator from 'validator';
-
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import store from "../../redux/store/store";
+import { adminLogin } from "../../redux/actions/adminAction";
+import validator from "validator";
+import Loader from "../loader/loader";
 class AdminLogin extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: '',
+      email: "",
+      password: ""
     };
   }
 
   handleChange = e => {
     this.setState({
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   };
 
   cb = () => {
-    this.props.history.push('/admin/feed');
+    this.props.history.push("/admin/feed");
   };
 
   handleAdminLogin = e => {
     e.preventDefault();
     const adminCredentials = {
       email: this.state.email,
-      password: this.state.password,
+      password: this.state.password
     };
-    console.log(adminCredentials, 'adminCredentials');
-
     if (!adminCredentials.email || !adminCredentials.password) {
-      return res.json('Email and password are must.');
+      return alert("Email and password are must.");
     }
     if (!validator.isEmail(adminCredentials.email)) {
-      return res.json('Invalid email.');
+      return alert("Invalid email.");
     }
     if (adminCredentials.password.length < 6) {
-      return res.json('Password must be atleast 6 characters.');
+      return alert("Password must be atleast 6 characters.");
     }
 
     this.props.dispatch(adminLogin(adminCredentials, this.cb));
-
   };
 
   render() {
-    console.log(this.props, adminLogin)
-    const { email , password } = this.state;
+    const { email, password } = this.state;
     return (
       <div className="wrapper text-center">
+        {store.getState().adminReducer.isAdminLoggedIn ? <Loader /> : this.cb}
+
         <h1 className="heading">Admin-Login</h1>
         <div>
           <input

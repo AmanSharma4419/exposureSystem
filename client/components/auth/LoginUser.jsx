@@ -1,20 +1,21 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import validator from 'validator';
-import {studentLogin} from '../../redux/actions/studentAction';
-
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import validator from "validator";
+import { studentLogin } from "../../redux/actions/studentAction";
+import store from "../../redux/store/store";
+import Loader from "../loader/loader";
 class LoginStudent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: '',
+      email: "",
+      password: ""
     };
-  };
+  }
 
   handleChange = e => {
     this.setState({
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   };
   cb = status => {
@@ -22,7 +23,7 @@ class LoginStudent extends Component {
       const username = this.props.studentReducer.studentData.student.username;
       this.props.history.push(`dashboard/${username}`);
     } else if (status == false) {
-      this.props.history.push('/await-approval');
+      this.props.history.push("/await-approval");
     }
   };
 
@@ -30,23 +31,32 @@ class LoginStudent extends Component {
     e.preventDefault();
     const { email, password } = this.state;
     if (!email || !password) {
-      return alert('Email and password are must.');
+      return alert("Email and password are must.");
     }
     if (!validator.isEmail(email)) {
-      return alert('Invalid email.');
+      return alert("Invalid email.");
     }
     if (password.length < 6) {
-      return alert('Password must be atleast 6 characters');
+      return alert("Password must be atleast 6 characters");
     }
-    this.props.studentLogin(this.state, this.cb);
+    this.props.studentLogin(this.state);
+  };
+  afterLogin = () => {
+    this.props.history.push("/await-approval");
   };
 
   render() {
+    console.log(store.getState(), "in the login user compnent");
     const { email, password } = this.state;
     return (
       <div>
         <div className="wrapper card text-center">
           <h1 className="heading">Login</h1>
+          {store.getState().studentReducer.isStudentLoggingIn ? (
+            <Loader />
+          ) : (
+            this.afterLogin
+          )}
           <div>
             <div>
               <input
