@@ -1,20 +1,20 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import validator from 'validator';
-import {studentLogin} from '../../redux/actions/studentAction';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import validator from "validator";
+import { studentLogin } from "../../redux/actions/studentAction";
 
 class LoginStudent extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: '',
+      email: "",
+      password: ""
     };
-  };
+  }
 
   handleChange = e => {
     this.setState({
-      [e.target.name]: e.target.value,
+      [e.target.name]: e.target.value
     });
   };
   cb = status => {
@@ -22,7 +22,7 @@ class LoginStudent extends Component {
       const username = this.props.studentReducer.studentData.student.username;
       this.props.history.push(`dashboard/${username}`);
     } else if (status == false) {
-      this.props.history.push('/await-approval');
+      this.props.history.push("/await-approval");
     }
   };
 
@@ -30,13 +30,13 @@ class LoginStudent extends Component {
     e.preventDefault();
     const { email, password } = this.state;
     if (!email || !password) {
-      return alert('Email and password are must.');
+      return alert("Email and password are must.");
     }
     if (!validator.isEmail(email)) {
-      return alert('Invalid email.');
+      return alert("Invalid email.");
     }
     if (password.length < 6) {
-      return alert('Password must be atleast 6 characters');
+      return alert("Password must be atleast 6 characters");
     }
     this.props.studentLogin(this.state, this.cb);
   };
@@ -44,20 +44,54 @@ class LoginStudent extends Component {
   render() {
     const { email, password } = this.state;
     return (
-      <div>
-        <div className="wrapper card text-center">
-          <h1 className="heading">Login</h1>
-          <div>
-            <div>
+      // <section className="columns">
+      //   <div className="container flex-center is-grouped">
+      //     <div className="notification">
+      //       <h2>Login</h2>
+      //       <div className="control">
+      //         <input
+      //           className="input"
+      //           type="email"
+      //           name="email"
+      //           placeholder="Enter email"
+      //           onChange={this.handleChange}
+      //           value={this.state.email}
+      //         />
+      //         <br />
+      //         <input
+      //           className="input"
+      //           type="password"
+      //           name="password"
+      //           placeholder="Enter password"
+      //           onChange={this.handleChange}
+      //           value={this.state.password}
+      //         />
+      //         <br />
+      //         <button
+      //           className="button is-primary "
+      //           type="submit"
+      //           onClick={this.handleSubmit}
+      //         >
+      //           Submit
+      //         </button>
+      //       </div>
+      //     </div>
+      //   </div>
+      // </section>
+
+      <section className="columns">
+        <div className="container flex-center is-grouped">
+          <div className="notification">
+            <h2>Login</h2>
+            <div className="control">
               <input
                 className="input"
-                type="email"
+                type="text"
                 name="email"
                 placeholder="Enter email"
                 onChange={this.handleChange}
                 value={this.state.email}
               />
-              <br />
               <input
                 className="input"
                 type="password"
@@ -66,9 +100,8 @@ class LoginStudent extends Component {
                 onChange={this.handleChange}
                 value={this.state.password}
               />
-              <br />
               <button
-                className="button"
+                className="button is-primary  "
                 type="submit"
                 onClick={this.handleSubmit}
               >
@@ -77,7 +110,7 @@ class LoginStudent extends Component {
             </div>
           </div>
         </div>
-      </div>
+      </section>
     );
   }
 }

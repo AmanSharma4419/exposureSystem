@@ -46,38 +46,72 @@ class AdminLogin extends Component {
   render() {
     const { email, password } = this.state;
     return (
-      <div className="container" className="wraper">
-        <h1 className="heading">Admin-Login</h1>
-        <div className="notification">
-          <input
-            className="input"
-            type="text"
-            name="email"
-            placeholder="Enter email"
-            onChange={this.handleChange}
-            value={email}
-          />
-          <br />
+      // <div className="wtextrapper container">
+      //   <div className="notification">
+      //     <h1 className="heading">Admin-Login</h1>
+      //     <div className="control">
+      //       <input
+      //         className="input"
+      //         type="text"
+      //         name="email"
+      //         placeholder="Enter email"
+      //         onChange={this.handleChange}
+      //         value={email}
+      //       />
+      //       <br />
 
-          <input
-            className="input"
-            type="password"
-            name="password"
-            placeholder="Enter password"
-            onChange={this.handleChange}
-            value={password}
-          />
-          <br />
+      //       <input
+      //         className="input"
+      //         type="password"
+      //         name="password"
+      //         placeholder="Enter password"
+      //         onChange={this.handleChange}
+      //         value={password}
+      //       />
+      //       <br />
 
-          <button
-            className="is-primary button is-right"
-            type="submit"
-            onClick={this.handleAdminLogin}
-          >
-            Submit
-          </button>
+      //       <button
+      //         className="button is-primary "
+      //         type="submit"
+      //         onClick={this.handleAdminLogin}
+      //       >
+      //         Submit
+      //       </button>
+      //     </div>
+      //   </div>
+      // </div>
+      <section className="columns">
+        <div className="container flex-center is-grouped">
+          <div className="notification">
+            <h2>Admin Login</h2>
+            <div className="control">
+              <input
+                className="input"
+                type="text"
+                name="email"
+                placeholder="Enter email"
+                onChange={this.handleChange}
+                value={email}
+              />
+              <input
+                className="input"
+                type="password"
+                name="password"
+                placeholder="Enter password"
+                onChange={this.handleChange}
+                value={password}
+              />
+              <button
+                className="button is-primary  "
+                type="submit"
+                onClick={this.handleAdminLogin}
+              >
+                Submit
+              </button>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
     );
   }
 }
